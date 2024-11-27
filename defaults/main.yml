@@ -1,0 +1,55 @@
+---
+# templates to additionally include. example:
+# dc_additional_templates:
+#   - src: 'haproxy.cfg.j2'
+#     dest: 'haproxy.cfg'
+#     owner: 'root'
+#     group: 'root'
+#     mode: '0755'
+dc_additional_templates: []
+# files to additionally deploy. example:
+# dc_additional_templates:
+#   - src: 'haproxy.cfg'
+#     dest: 'haproxy.cfg'
+#     owner: 'root'
+#     group: 'root'
+#     mode: '0755'
+dc_additional_files: []
+### docker-compose module configuration
+dc_api_version:
+dc_build:
+dc_ca_path:
+dc_check_files_existing:
+dc_cli_context:
+dc_client_cert:
+dc_client_key:
+# docker-compose file contents
+dc_definition: # REQUIRED
+dc_dependencies:
+dc_docker_cli:
+dc_docker_host:
+dc_env_files:
+# skipping files as it makes this abstraction complicated
+# files: null
+dc_profiles:
+dc_project_name: # REQUIRED
+dc_project_src: "/opt/stacks/{{ project_name }}"
+dc_pull:
+dc_recreate:
+dc_remove_images:
+dc_remove_orphans:
+dc_remove_volumes:
+dc_renew_anon_volumes:
+dc_scale:
+dc_services:
+# present is equivalent to running docker compose up
+# stopped is equivalent to running docker compose stop
+# absent is equivalent to running docker compose down
+# restarted is equivalent to running docker compose restart
+dc_state: "present"
+dc_timeout:
+dc_tls:
+dc_tls_hostname:
+dc_validate_certs:
+dc_wait:
+dc_wait_timeout:

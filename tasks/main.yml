@@ -1,0 +1,69 @@
+---
+- name: Fail if our required vars are not defined
+  ansible.builtin.fail:
+    msg: "Variables dc_definition, dc_project_src, and dc_project_name are required"
+  when:
+    - dc_definition is null
+    - dc_project_name is null
+    - dc_project_src is null
+
+- name: Ensure our target directory is created
+  ansible.builtin.file:
+    path: "{{ dc_project_src }}"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Deploy our files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+  with_items: "{{ dc_additional_files }}"
+  when: "dc_additional_files is not null"
+
+- name: Deploy our templates
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+  with_items: "{{ dc_additional_templates }}"
+  when: "dc_additional_templates is not null"
+
+- name: Docker-compose our app
+  community.docker.docker_compose_v2:
+    api_version: "{{ dc_api_version | default(omit) }}"
+    build: "{{ dc_build | default(omit) }}"
+    ca_path: "{{ dc_ca_path | default(omit) }}"
+    check_files_existing: "{{ dc_check_files_existing | default(omit) }}"
+    cli_context: "{{ dc_cli_context | default(omit) }}"
+    client_cert: "{{ dc_client_cert | default(omit) }}"
+    client_key: "{{ dc_client_key | default(omit) }}"
+    definition: "{{ dc_definition }}"
+    dependencies: "{{ dc_dependencies | default(omit) }}"
+    docker_cli: "{{ dc_docker_cli | default(omit) }}"
+    docker_host: "{{ dc_docker_host | default(omit) }}"
+    env_files: "{{ dc_env_files | default(omit) }}"
+    profiles: "{{ dc_profiles | default(omit) }}"
+    project_name: "{{ dc_project_name }}"
+    project_src: "{{ dc_project_src | default(omit) }}"
+    pull: "{{ dc_pull | default(omit) }}"
+    recreate: "{{ dc_recreate | default(omit) }}"
+    remove_images: "{{ dc_remove_images | default(omit) }}"
+    remove_orphans: "{{ dc_remove_orphans | default(omit) }}"
+    remove_volumes: "{{ dc_remove_volumes | default(omit) }}"
+    renew_anon_volumes: "{{ dc_renew_anon_volumes | default(omit) }}"
+    scale: "{{ dc_scale | default(omit) }}"
+    services: "{{ dc_services | default(omit) }}"
+    state: "{{ dc_state | default('present') }}"
+    timeout: "{{ dc_timeout | default(omit) }}"
+    tls: "{{ dc_tls | default(omit) }}"
+    tls_hostname: "{{ dc_tls_hostname | default(omit) }}"
+    validate_certs: "{{ dc_validation_certs | default(omit) }}"
+    wait: "{{ dc_wait | default(omit) }}"
+    wait_timeout: "{{ dc_wait_timeout | default(omit) }}"

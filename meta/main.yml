@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: David Wahlstrom
+  role_name: docker_compose_app
+  namespace: drwahl
+  description: Deploy an application using docker-compose
+  license: BSD
+  min_ansible_version: 2.1
+  galaxy_tags:
+    - dockercompose
+    - docker
+  dependencies:
+    - community.docker

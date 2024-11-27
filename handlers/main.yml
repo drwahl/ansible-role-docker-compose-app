@@ -1,0 +1,6 @@
+---
+# handlers file for docker-compose
+#- name: Docker-compose restart
+#  community.docker.docker_compose_v2:
+#    project_src: "{{ dc_project_src | default(omit) }}"
+#    state: restarted
